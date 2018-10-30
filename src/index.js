@@ -1,10 +1,35 @@
-import React from 'react'
-import { render } from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-function App() {
+const App = () => {
     return (
-        <h1>Привет React!</h1>
+        <div>
+            <AppHeader />
+            <SearchPanel />
+            <TodoList />
+        </div>
     )
-};
+}
 
-render(<App />, document.querySelector('#root'));
+const TodoList = () => {
+    return (
+        <ul>
+            <li>Выучить javascript</li>
+            <li>Выучить react</li>
+        </ul>
+    );
+}
+
+const AppHeader = () => {
+    return (
+        <h1>Мое Todo приложение</h1>
+    )
+}
+
+const SearchPanel = () => {
+    return (
+        <input placeholder="Поиск" />
+    )
+}
+
+ReactDOM.render(<App />, document.querySelector('#root'));
