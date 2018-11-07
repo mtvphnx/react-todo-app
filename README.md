@@ -1,8 +1,8 @@
-# Todo App
-Приложение для создания списка дел (javascript, react)
+# React Todo App
+Приложение для создания списка дел (javascript, react, jsx)
 ____
 
-Демо приложения: https://mtvphnx.github.io/todo-app/build/
+Демо приложения: https://mtvphnx.github.io/react-todo-app/build/
 
 Используемая сборка: https://github.com/facebook/create-react-app
 
