@@ -11,7 +11,9 @@ const App = () => {
     const todoData = [
         { label: 'Выучить javascript', important: false, id: 1 },
         { label: 'Выучить react', important: true, id: 2 },
-        { label: 'Выучить node', important: false, id: 3 }
+        { label: 'Выучить node', important: false, id: 3 },
+        { label: 'Слетать в космос', important: false, id: 4 },
+        { label: 'Захватить весь мир!', important: true, id: 5 }
     ];
 
     return (
@@ -23,7 +25,8 @@ const App = () => {
                 <StatusFilter/>
             </div>
 
-            <TodoList data={ todoData }/>
+            <TodoList data={ todoData }
+            onDeleted={ (id) => console.log(id) } />
         </div>
     )
 };
