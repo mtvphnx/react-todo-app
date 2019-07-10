@@ -1,8 +1,13 @@
 import React from "react";
 
-const Header = () => {
+import './header.css';
+
+const Header = ({toDo, done}) => {
     return (
-        <h1>Мой список дел</h1>
+        <div className="header d-flex">
+            <h1>Мой список дел</h1>
+            <h2>Осталось {toDo} из {done}</h2>
+        </div>
     )
 };
 
