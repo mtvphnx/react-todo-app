@@ -1,34 +1,120 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import Header from '../header';
 import TodoList from '../todo-list';
 import Search from '../search';
 import StatusFilter from '../status-filter';
+import ItemAddForm from '../item-add-form'
 
 import './app.css';
 
-const App = () => {
-    const todoData = [
-        { label: 'Выучить javascript', important: false, id: 1 },
-        { label: 'Выучить react', important: true, id: 2 },
-        { label: 'Выучить node', important: false, id: 3 },
-        { label: 'Слетать в космос', important: false, id: 4 },
-        { label: 'Захватить весь мир!', important: true, id: 5 }
-    ];
+export default class App extends Component {
 
-    return (
-        <div className='app'>
-            <Header toDo={1} done={3} />
+    maxId = 100;
 
-            <div className='panel d-flex'>
-                <Search/>
-                <StatusFilter/>
+    state = {
+        todoData: [
+            this.createTodoItem('Выучить javascript'),
+            this.createTodoItem('Выучить react'),
+            this.createTodoItem('Выучить node'),
+            this.createTodoItem('Слетать в космос'),
+            this.createTodoItem('Захватить весь мир!')
+        ]
+    }
+
+    createTodoItem(label) {
+        return {
+            label,
+            important: false,
+            done: false,
+            id: this.maxId++
+        }
+    }
+
+    deleteItem = (id) => {
+        this.setState(({ todoData }) => {
+            const idx = todoData.findIndex((el) => el.id === id);
+
+            const newDate = [
+                ...todoData.slice(0, idx),
+                ...todoData.slice(idx + 1)
+                ];
+
+            return {
+                todoData: newDate
+            }
+        })
+    }
+
+    addItem = (text) => {
+        const newItem = this.createTodoItem(text);
+
+        this.setState(({ todoData }) => {
+            const newArr = [
+                ...todoData,
+                newItem
+            ]
+
+            return {
+                todoData: newArr
+            }
+        })
+    }
+
+    toggleProperty(arr, id, propName) {
+        const idx = arr.findIndex((el) => el.id === id);
+        
+        const oldItem = arr[idx];
+        const newItem = {...oldItem, [propName]: !oldItem[propName]};
+
+        return [
+            ...arr.slice(0, idx),
+            newItem,
+            ...arr.slice(idx + 1)
+        ]
+    }
+
+    onToggleImportant = (id) => {
+        this.setState(({todoData}) => {
+            return {
+                todoData: this.toggleProperty(todoData, id, 'important')
+            }
+        })
+    }
+
+    onToggleDone = (id) => {
+        this.setState(({todoData}) => {
+            return {
+                todoData: this.toggleProperty(todoData, id, 'done')
+            }
+        })
+    }
+    
+    render() {
+
+        const { todoData } = this.state;
+
+        const doneCount = todoData.filter((el) => el.done).length;
+        const todoCount = todoData.length - doneCount;
+
+        return (
+            <div className='app'>
+                <Header toDo={todoCount} done={doneCount} />
+
+                <div className='panel d-flex'>
+                    <Search/>
+                    <StatusFilter/>
+                </div>
+
+                <TodoList 
+                    data={ this.state.todoData }
+                    onDeleted={ this.deleteItem } 
+                    onToggleImportant={ this.onToggleImportant }
+                    onToggleDone={ this.onToggleDone }
+                />
+
+                <ItemAddForm onItemAdded = {this.addItem}/>
             </div>
-
-            <TodoList data={ todoData }
-            onDeleted={ (id) => console.log(id) } />
-        </div>
-    )
+        )
+    }
 };
-
-export default App;

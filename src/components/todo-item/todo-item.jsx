@@ -2,33 +2,10 @@ import React, { Component } from "react";
 
 import './todo-item.css';
 
-export default class TodoItem extends Component {
+export default class TodoItem extends Component { 
 
-    state =  {
-        done: false,
-        important: false
-    };
-
-    onTextClick = () => {
-        this.setState(({ done }) => {
-            return {
-                done: !done
-            }
-        })
-    };
-
-    onMarkImportant = () => {
-        this.setState(({ important }) => {
-            return {
-                important: !important
-            }
-        })
-    };
-
-    render () {
-        const { label: text, onDeleted } = this.props;
-
-        const { done, important } = this.state;
+    render() {
+        const { label: text, onDeleted, onToggleImportant, onToggleDone, important, done } = this.props;
 
         let classNames = 'todo-list-item';
 
@@ -41,20 +18,21 @@ export default class TodoItem extends Component {
         }
 
         return (
-            <span className={ classNames }>
-            <span className="todo-list-item-label"
-                  onClick={ this.onTextClick }>{ text }</span>
+            <span className={classNames}>
+                <span className="todo-list-item-label"
+                    onClick={onToggleDone}>{text}</span>
 
-            <button type="button" className="btn btn-outline-success btn-sm float-right"
-                onClick={ this.onMarkImportant }>
-                <i className="fa fa-exclamation" />
-            </button>
+                <button type="button" className="btn btn-outline-danger btn-sm float-right"
+                    onClick={onDeleted}>
+                    <i className="fa fa-trash-o" />
+                </button>
 
-            <button type="button" className="btn btn-outline-danger btn-sm float-right"
-                onClick={ onDeleted }>
-                <i className="fa fa-trash-o" />
-            </button>
-        </span>
+                <button type="button" className="btn btn-outline-success btn-sm float-right"
+                    onClick={onToggleImportant}>
+                    <i className="fa fa-exclamation" />
+                </button>
+
+            </span>
         );
     }
 }
