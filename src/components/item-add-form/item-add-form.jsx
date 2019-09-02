@@ -1,40 +1,43 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 import './item-add-form.css';
 
 export default class ItemAddForm extends Component {
-
     state = {
         label: ''
-    }
+    };
 
-    onLabelChange = (e) => {
+    onLabelChange = e => {
         this.setState({
             label: e.target.value
         });
-    }
+    };
 
-    onSubmit = (e) => {
+    onSubmit = e => {
         e.preventDefault();
-        this.props.onItemAdded(this.state.label);
+        if (this.state.label !== '' && this.state.label.trim().length > 0) {
+            this.props.onItemAdded(this.state.label);
 
-        this.setState({
-            label: ''
-        });
-    }
+            this.setState({
+                label: ''
+            });
+        }
+    };
 
     render() {
         return (
-            <form className="item-add-form d-flex"
-                onSubmit={this.onSubmit}
-            >
-                <input type="text" className="form-control"
+            <form className="item-add-form d-flex" onSubmit={this.onSubmit}>
+                <input
+                    type="text"
+                    className="form-control"
                     onChange={this.onLabelChange}
                     placeholder="Что нужно сделать?"
                     value={this.state.label}
                 />
-                <button className="btn btn-outline-secondary">Добавить пункт</button>
+                <button className="btn btn-outline-secondary">
+                    Добавить пункт
+                </button>
             </form>
-        )
+        );
     }
-};
+}
