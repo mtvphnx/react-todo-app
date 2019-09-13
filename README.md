@@ -1,5 +1,5 @@
 # React Todo App
-Приложение для создания списка дел (react, jx, webpack, redux)
+Приложение для создания списка дел (react, jx, webpack)
 ____
 
 Демо приложения: https://mtvphnx.github.io/todo-app/build/
